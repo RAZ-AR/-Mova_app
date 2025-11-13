@@ -7,26 +7,66 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f8ff; /* Alice Blue - lighter background for pastel effect */
+    background-color: #f0f2f5; /* A very light, almost white base */
     font-family: 'Helvetica Neue', sans-serif;
     overflow: hidden;
-    color: #333; /* Darker text for contrast on light background */
 }
 
-body::before {
-    content: '';
+.background-layer, .spheres-layer {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Make sure they don't interfere with clicks */
+}
+
+.background-layer {
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
     background: 
-        radial-gradient(circle at 20% 20%, #FFD1DC, transparent 30%), /* Light Pink */
-        radial-gradient(circle at 80% 30%, #B0E0E6, transparent 30%), /* Powder Blue */
-        radial-gradient(circle at 50% 70%, #98FB98, transparent 30%), /* Pale Green */
-        radial-gradient(circle at 90% 90%, #FFFACD, transparent 30%); /* Lemon Chiffon */
-    animation: lava 25s infinite linear;
+        radial-gradient(circle at 20% 30%, #a7c7e7, transparent 40%), /* Pastel Blue */
+        radial-gradient(circle at 80% 20%, #fddde6, transparent 40%), /* Pastel Pink */
+        radial-gradient(circle at 50% 70%, #b2e2d8, transparent 40%), /* Pastel Mint */
+        radial-gradient(circle at 90% 80%, #d9d2e9, transparent 40%), /* Pastel Lilac */
+        radial-gradient(circle at 50% 50%, #ffffff, transparent 50%); /* Pearly White */
+    animation: lava 35s infinite linear;
     z-index: 0;
+}
+
+.spheres-layer {
+    background:
+        /* Sphere 1: Large and prominent with more complex gradient */
+        radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0) 40%),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 50%),
+
+        /* Sphere 2: Medium, overlapping with more complex gradient */
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0) 35%),
+        radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 35%, transparent 45%),
+
+        /* Sphere 3: Smaller, in the distance with more complex gradient */
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0) 25%),
+        radial-gradient(circle at 55% 55%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 25%, transparent 35%),
+
+        /* New Sphere 4: Top right with more complex gradient */
+        radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.1) 22%, rgba(255, 255, 255, 0) 30%),
+        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 40%),
+
+        /* New Sphere 5: Bottom left with more complex gradient */
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 23%, rgba(255, 255, 255, 0) 28%),
+        radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 28%, transparent 38%),
+
+        /* New Sphere 6: Center-ish, smaller with more complex gradient */
+        radial-gradient(circle at 30% 60%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 15%, rgba(255, 255, 255, 0) 20%),
+        radial-gradient(circle at 35% 65%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 20%, transparent 30%);
+
+    background-size: 100% 100%;
+    animation: waves 20s infinite linear alternate;
+    z-index: 1;
+    filter: blur(8px); /* Increased blur for stronger distortion */
+    mix-blend-mode: screen; /* This helps create the "glass" effect */
 }
 
 @keyframes lava {
@@ -34,14 +74,22 @@ body::before {
     100% { transform: rotate(360deg); }
 }
 
+@keyframes waves {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 .splash-container {
     text-align: center;
     animation: fadeIn 2s ease-in-out;
-    z-index: 1; /* Ensure content is above the background */
+    z-index: 2; /* Ensure logo is above all background layers */
 }
 
 #logo {
     width: 250px; /* Adjust as needed */
+    /* A subtle drop-shadow can help the logo stand out */
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
 }
 
 @keyframes fadeIn {
