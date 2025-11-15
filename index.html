@@ -39,7 +39,7 @@
                 radial-gradient(circle at 50% 70%, #b2e2d8, transparent 40%),
                 radial-gradient(circle at 90% 80%, #d9d2e9, transparent 40%),
                 radial-gradient(circle at 50% 50%, #ffffff, transparent 50%);
-            animation: lava 25s infinite linear; /* Faster animation */
+            animation: lava 40s infinite ease-in-out alternate; /* Smoother and more natural */
             z-index: 0;
         }
 
@@ -58,7 +58,7 @@
                 radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 25%);
 
             background-size: 100% 100%;
-            animation: waves 20s infinite ease-in-out alternate; /* Faster and smoother animation */
+            animation: waves 30s infinite cubic-bezier(0.42, 0, 0.58, 1); /* Smoother and more complex */
             z-index: 1;
             filter: blur(12px); /* Even stronger blur */
             mix-blend-mode: screen;
@@ -66,14 +66,16 @@
         }
 
         @keyframes lava {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            from { transform: rotate(0deg) scale(1); }
+            to { transform: rotate(120deg) scale(1.1); }
         }
 
         @keyframes waves {
-            0% { background-position: 0% 50%; transform: scale(1) skew(0deg, 0deg); }
-            50% { background-position: 100% 50%; transform: scale(1.05) skew(-5deg, -2deg); }
-            100% { background-position: 0% 50%; transform: scale(1) skew(0deg, 0deg); }
+            0%   { transform: scale(1)    skew(0deg, 0deg)   rotate(0deg);   background-position: 0% 50%; }
+            25%  { transform: scale(1.02) skew(-2deg, -1deg) rotate(5deg);   background-position: 50% 0%; }
+            50%  { transform: scale(1.05) skew(-4deg, -2deg) rotate(0deg);   background-position: 100% 50%; }
+            75%  { transform: scale(1.02) skew(2deg, 1deg)   rotate(-5deg);  background-position: 50% 100%; }
+            100% { transform: scale(1)    skew(0deg, 0deg)   rotate(0deg);   background-position: 0% 50%; }
         }
 
         .splash-container {
