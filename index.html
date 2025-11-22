@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #FAF0E6 0%, #FFF5F7 100%);
             font-family: 'Helvetica Neue', sans-serif;
             overflow: hidden;
         }
@@ -29,53 +29,73 @@
         }
 
         .background-layer {
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 30%, #a7c7e7, transparent 40%),
-                radial-gradient(circle at 80% 20%, #fddde6, transparent 40%),
-                radial-gradient(circle at 50% 70%, #b2e2d8, transparent 40%),
-                radial-gradient(circle at 90% 80%, #d9d2e9, transparent 40%),
-                radial-gradient(circle at 50% 50%, #ffffff, transparent 50%);
-            animation: lava 40s infinite ease-in-out alternate; /* Smoother and more natural */
+            background:
+                radial-gradient(circle at 20% 80%, #FFD4E5 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, #B5D8FF 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, #F5E6D3 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, #E5D4FF 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #D4FFED 0%, transparent 50%);
+            background-size: 200% 200%;
+            animation: lavaMove 25s ease-in-out infinite;
             z-index: 0;
+            filter: blur(60px);
+            opacity: 0.7;
         }
 
         .spheres-layer {
             background:
-                /* --- Main Abstract Shape --- */
-                /* Body */
-                radial-gradient(ellipse 50% 20% at 50% 50%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 70%, transparent 90%),
-                /* Tail */
-                radial-gradient(ellipse 30% 15% at 20% 55%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 80%),
-                /* Head area highlight */
-                radial-gradient(ellipse 20% 20% at 75% 45%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%),
-
-                /* --- Smaller Spheres --- */
-                radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 20%),
-                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 25%);
-
-            background-size: 100% 100%;
-            animation: waves 30s infinite cubic-bezier(0.42, 0, 0.58, 1); /* Smoother and more complex */
+                radial-gradient(circle at 30% 50%, #FFB5D8 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, #C5E0FF 0%, transparent 35%),
+                radial-gradient(circle at 60% 20%, #F0E4D7 0%, transparent 45%),
+                radial-gradient(circle at 90% 50%, #D9C5FF 0%, transparent 38%),
+                radial-gradient(circle at 15% 30%, #C5FFE5 0%, transparent 42%);
+            background-size: 300% 300%;
+            animation: lavaBlobs 35s ease-in-out infinite;
             z-index: 1;
-            filter: blur(12px); /* Even stronger blur */
-            mix-blend-mode: screen;
-            box-shadow: inset 0 0 60px 30px rgba(0, 0, 0, 0.05);
+            filter: blur(80px);
+            opacity: 0.6;
         }
 
-        @keyframes lava {
-            from { transform: rotate(0deg) scale(1); }
-            to { transform: rotate(120deg) scale(1.1); }
+        @keyframes lavaMove {
+            0% {
+                background-position: 0% 0%, 100% 100%, 50% 50%, 100% 0%, 0% 100%;
+                transform: scale(1) rotate(0deg);
+            }
+            33% {
+                background-position: 100% 50%, 0% 100%, 80% 20%, 50% 50%, 50% 0%;
+                transform: scale(1.1) rotate(120deg);
+            }
+            66% {
+                background-position: 50% 100%, 50% 0%, 20% 80%, 0% 100%, 100% 50%;
+                transform: scale(1.05) rotate(240deg);
+            }
+            100% {
+                background-position: 0% 0%, 100% 100%, 50% 50%, 100% 0%, 0% 100%;
+                transform: scale(1) rotate(360deg);
+            }
         }
 
-        @keyframes waves {
-            0%   { transform: scale(1)    skew(0deg, 0deg)   rotate(0deg);   background-position: 0% 50%; }
-            25%  { transform: scale(1.02) skew(-2deg, -1deg) rotate(5deg);   background-position: 50% 0%; }
-            50%  { transform: scale(1.05) skew(-4deg, -2deg) rotate(0deg);   background-position: 100% 50%; }
-            75%  { transform: scale(1.02) skew(2deg, 1deg)   rotate(-5deg);  background-position: 50% 100%; }
-            100% { transform: scale(1)    skew(0deg, 0deg)   rotate(0deg);   background-position: 0% 50%; }
+        @keyframes lavaBlobs {
+            0% {
+                background-position: 0% 50%, 50% 0%, 100% 50%, 50% 100%, 25% 75%;
+                transform: scale(1) translateY(0);
+            }
+            25% {
+                background-position: 50% 100%, 100% 50%, 0% 50%, 75% 25%, 50% 0%;
+                transform: scale(1.15) translateY(-20px);
+            }
+            50% {
+                background-position: 100% 50%, 50% 100%, 50% 0%, 0% 50%, 75% 25%;
+                transform: scale(0.95) translateY(20px);
+            }
+            75% {
+                background-position: 50% 0%, 0% 50%, 50% 100%, 25% 75%, 100% 50%;
+                transform: scale(1.1) translateY(-10px);
+            }
+            100% {
+                background-position: 0% 50%, 50% 0%, 100% 50%, 50% 100%, 25% 75%;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .splash-container {
