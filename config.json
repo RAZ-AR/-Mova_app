@@ -1,0 +1,13 @@
+{
+    "animation": {
+        "blur": 80,
+        "saturate": 140,
+        "base_blobs": 8,
+        "highlight_blobs": 5,
+        "mouse_interaction": {
+            "enabled": true,
+            "distance": 200,
+            "force": 0.1
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "mova",
+  "version": "1.0.0",
+  "description": "This is a simple project that displays a dynamic background with pastel tones.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RAZ-AR/-Mova_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/RAZ-AR/-Mova_app/issues"
+  },
+  "homepage": "https://github.com/RAZ-AR/-Mova_app#readme",
+  "devDependencies": {
+    "eslint": "^9.39.1"
+  }
+}
