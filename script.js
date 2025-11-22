@@ -10,18 +10,18 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-// Пастельные цвета для лавовой лампы
+// Пастельные цвета для лавовой лампы - БОЛЕЕ ЯРКИЕ
 const colors = [
-    { r: 255, g: 181, b: 216 }, // Розовый
-    { r: 255, g: 201, b: 224 }, // Светло-розовый
-    { r: 181, g: 216, b: 255 }, // Голубой
-    { r: 197, g: 224, b: 255 }, // Светло-голубой
-    { r: 245, g: 230, b: 211 }, // Бежевый
-    { r: 255, g: 228, b: 196 }, // Светло-бежевый
-    { r: 229, g: 212, b: 255 }, // Лавандовый
-    { r: 217, g: 197, b: 255 }, // Светло-лавандовый
-    { r: 197, g: 255, b: 229 }, // Мятный
-    { r: 212, g: 255, b: 237 }  // Светло-мятный
+    { r: 255, g: 150, b: 200 }, // Розовый
+    { r: 255, g: 180, b: 210 }, // Светло-розовый
+    { r: 150, g: 200, b: 255 }, // Голубой
+    { r: 180, g: 210, b: 255 }, // Светло-голубой
+    { r: 255, g: 220, b: 180 }, // Бежевый
+    { r: 255, g: 230, b: 200 }, // Светло-бежевый
+    { r: 220, g: 180, b: 255 }, // Лавандовый
+    { r: 200, g: 170, b: 255 }, // Светло-лавандовый
+    { r: 180, g: 255, b: 220 }, // Мятный
+    { r: 200, g: 255, b: 230 }  // Светло-мятный
 ];
 
 // Класс для создания blob'ов (шариков лавовой лампы)
@@ -33,14 +33,14 @@ class Blob {
     reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 150 + 80; // Размер от 80 до 230
+        this.radius = Math.random() * 120 + 100; // Размер от 100 до 220
         this.baseRadius = this.radius;
-        this.speedY = (Math.random() - 0.5) * 0.8; // Медленная вертикальная скорость
-        this.speedX = (Math.random() - 0.5) * 0.5; // Медленная горизонтальная скорость
+        this.speedY = (Math.random() - 0.5) * 1.2; // Чуть быстрее
+        this.speedX = (Math.random() - 0.5) * 0.8;
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.pulseSpeed = Math.random() * 0.02 + 0.01;
         this.pulsePhase = Math.random() * Math.PI * 2;
-        this.opacity = Math.random() * 0.3 + 0.5; // Прозрачность от 0.5 до 0.8
+        this.opacity = Math.random() * 0.4 + 0.6; // Более непрозрачные: от 0.6 до 1.0
     }
 
     update(time) {
@@ -49,7 +49,7 @@ class Blob {
         this.x += this.speedX;
 
         // Пульсация размера
-        this.radius = this.baseRadius + Math.sin(time * this.pulseSpeed + this.pulsePhase) * 20;
+        this.radius = this.baseRadius + Math.sin(time * this.pulseSpeed + this.pulsePhase) * 30;
 
         // Если blob выходит за границы, возвращаем его с другой стороны
         if (this.y - this.radius > canvas.height) {
@@ -68,7 +68,7 @@ class Blob {
         }
     }
 
-    draw() {
+    draw(useBlur = false) {
         // Создаем радиальный градиент для blob'а
         const gradient = ctx.createRadialGradient(
             this.x, this.y, 0,
@@ -77,7 +77,8 @@ class Blob {
 
         const c = this.color;
         gradient.addColorStop(0, `rgba(${c.r}, ${c.g}, ${c.b}, ${this.opacity})`);
-        gradient.addColorStop(0.5, `rgba(${c.r}, ${c.g}, ${c.b}, ${this.opacity * 0.6})`);
+        gradient.addColorStop(0.4, `rgba(${c.r}, ${c.g}, ${c.b}, ${this.opacity * 0.7})`);
+        gradient.addColorStop(0.7, `rgba(${c.r}, ${c.g}, ${c.b}, ${this.opacity * 0.4})`);
         gradient.addColorStop(1, `rgba(${c.r}, ${c.g}, ${c.b}, 0)`);
 
         ctx.fillStyle = gradient;
@@ -89,7 +90,7 @@ class Blob {
 
 // Создаем массив blob'ов
 const blobs = [];
-const blobCount = 12; // Количество blob'ов
+const blobCount = 15; // Больше blob'ов
 
 for (let i = 0; i < blobCount; i++) {
     blobs.push(new Blob());
@@ -106,14 +107,6 @@ function drawBackground() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// Применяем эффект размытия через SVG фильтр
-function setupBlurEffect() {
-    const filterCanvas = document.createElement('canvas');
-    filterCanvas.width = canvas.width;
-    filterCanvas.height = canvas.height;
-    return filterCanvas;
-}
-
 let time = 0;
 
 // Основная функция анимации
@@ -123,26 +116,29 @@ function animate() {
     // Очищаем canvas и рисуем фон
     drawBackground();
 
-    // Применяем эффект размытия
-    ctx.filter = 'blur(40px)';
-
-    // Обновляем и рисуем все blob'ы
+    // Рисуем blob'ы БЕЗ размытия (базовый слой)
+    ctx.filter = 'none';
     blobs.forEach(blob => {
         blob.update(time);
         blob.draw();
     });
 
-    // Сбрасываем фильтр
-    ctx.filter = 'none';
-
-    // Добавляем дополнительный слой с меньшим размытием для глубины
+    // Добавляем слой с размытием для эффекта лавовой лампы
     ctx.globalCompositeOperation = 'screen';
-    ctx.filter = 'blur(60px) brightness(1.1)';
+    ctx.filter = 'blur(50px) brightness(1.15)';
 
     blobs.forEach(blob => {
         blob.draw();
     });
 
+    // Еще один слой с большим размытием для мягкости
+    ctx.filter = 'blur(80px) brightness(1.1)';
+
+    blobs.forEach(blob => {
+        blob.draw();
+    });
+
+    // Сбрасываем фильтры
     ctx.filter = 'none';
     ctx.globalCompositeOperation = 'source-over';
 
@@ -151,3 +147,8 @@ function animate() {
 
 // Запускаем анимацию
 animate();
+
+// Добавляем console.log для отладки
+console.log('Lava lamp animation started!');
+console.log('Canvas size:', canvas.width, 'x', canvas.height);
+console.log('Number of blobs:', blobs.length);
